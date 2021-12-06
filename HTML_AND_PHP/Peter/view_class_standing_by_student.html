@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- Basic form to accept input via a webinterface 
+	Author: Peter Jacobson
+	Fall 2021 Assignment Tracker - View Class Standings by Student ID
+
+	-->
+
+	<font size ="+2"><b>View Class Standing By Student ID</b></font>
+
+	<p><b>Implemented By:</b> Peter Jacobson</p>
+
+	<p><b>Description:</b> Output a students class standing based on their total credits earned. If a student has 0-44 freshman, 45-89 sophomore, 90-134 junior, and 135+ senior standing.</p> 
+
+	<p><b>Justification:</b> Useful for registration and auditing what stance of students are in each section or course.</p>
+
+	<p><b>Expected Output:</b> A class standing that correleated to the number of credits the student currently has. "Junior" expected in the example provided.</body>
+
+</head>
+
+<body>
+
+	<p><hr></p>
+	<p>Please enter the following information on the student you want to view (ex. 94012345): </p>
+
+	<!-- use the POST method to pass data to view_students_by_course.php -->
+  	<form action="view_class_standing_by_student.php" method="POST">
+
+      Student ID: <input type="number" name="student_id"><br><br>   
+   
+      <input type="submit" value="Submit" name="submit">
+
+	</form>
+
+
+</html>

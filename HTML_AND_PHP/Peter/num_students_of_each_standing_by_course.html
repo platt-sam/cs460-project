@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- Basic form to accept input via a webinterface 
+	Author: Peter Jacobson
+	Fall 2021 Assignment Tracker - �Student Standing by Course� Procedure
+
+	-->
+
+	<font size ="+2"><b>View Number of Each Class of Students By Course ID</b></font>
+
+	<p><b>Implemented By:</b> Peter Jacobson</p>
+
+	<p><b>Description:</b> Given a couse_id the procedure will output the number of students with each class standing.</p> 
+
+	<p><b>Justification:</b> This is useful to see which type of students are taking the class and when in their academic career to better understand future course planning.</p>
+
+	<p><b>Expected Output:</b> The number of students from each class standing. 4 Seniors and 1 Juniors expected in example provided. </body>
+
+</head>
+
+<body>
+
+	<p><hr></p>
+	<p>Please enter the following information on the course you want to view (ex. 1000): </p>
+
+	<!-- use the POST method to pass data to view_students_by_course.php -->
+  	<form action="num_students_of_each_standing_by_course.php" method="POST">
+
+      Course ID: <input type="number" name="course_id"><br><br>   
+   
+      <input type="submit" value="Submit" name="submit">
+
+	</form>
+
+
+</html>
