@@ -1,8 +1,11 @@
 use f21_assignmentTracker;
 /******************************************************************************************
 *	CS460 Fall 2021
-* 	Written by: Peter Jacobson
-*	Purpose: Create and populate Task and Course Tables for Assingment Tracker
+* 	Written by: Nayeli Equeda Alvarado, Peter Jacobson, Ronin Ganoot, Sam Platt
+*	Purpose: SQL source code for 'Assingment Tracker', see implementation here: https://cs460.sou.edu/~platts1/f21_assignmentTracker/
+*	Organization: The code below is organized first by table creation, then realtionships (if not implemented in table), then
+*			populating tables. After that views, functions, procedures, and triggers along with any tests and comments
+*			are organized under their respective developer. 
 ******************************************************************************************/
 SET FOREIGN_KEY_CHECKS = 0; 
 -- DROP TABLE IF EXISTS course;
@@ -74,6 +77,8 @@ INSERT INTO task (student_id, assignment_id, status, dateStarted, dateCompleted)
 SET FOREIGN_KEY_CHECKS = 1; 
 
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------- Peter's Implementation Below -----------------------------
 
 -- Students in Course View --
 	-- Description: Shows all students by name and ID that are taking a course regardless of what section they are enrolled in
@@ -219,12 +224,16 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Sam Code Here
+----------------------------- Sam's Implementation Below -----------------------------
 
-
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Nayeli Code Here
 
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Ronin Code Here
+----------------------------- Nayeli's Implementation Below -----------------------------
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------- Ronins's Implementation Below -----------------------------
+
+
