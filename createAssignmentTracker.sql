@@ -151,6 +151,14 @@ INSERT INTO roster_entry VALUES (3417, 94012345, 'C');	-- bobby
 INSERT INTO roster_entry VALUES (3417, 94206900, 'A');	-- karen
 INSERT INTO roster_entry VALUES (3417, 94039013, 'F');	-- michael
 
+-- Populate section table
+
+-- Populate assignment table
+
+-- Populate assignment_updates table
+
+-- Populate instructor table
+
 SET FOREIGN_KEY_CHECKS = 1; 
 
 
