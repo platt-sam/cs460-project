@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Basic form to accept input via a webinterface 
+    Author: Ronin Ganoot
+    Fall 2021 Assignment Tracker - Assignments to course status
+    -->
+
+    <font size ="+2"><b>- Check Status of Assignments 
+</b></font>
+
+    <p><b>Implemented By:</b> Ronin Ganoot</p>
+
+    <p><b>Description:</b>Outputs the assignment associated with the assignment status, the start date, due date and the name of it as well.</p> 
+
+    <p><b>Justification:</b> This is useful to see which assignments are associated with a course as well as its status, date started, and date completed 
+	if any.</p>
+
+    <p><b>Expected Output:</b> Should be one line that shows the course title, assignment id, assignment name, status, date started,
+	and date completed if any.</body>
+    
+    <p><b>Example:</b> Use Assignment ID: 2101 and Course ID: 4600</p>
+
+</head>
+
+<body>
+
+    <p> ----------------------------------------------------------------------------------------------------</p>
+    <p>Please enter the following information on the Assignment and Course you want to view (ex. 1000): </p>
+
+    <!-- use the POST method to pass data to use procedure from assignment_to_course_status_proc.php -->
+      <form action="assignment_to_course_status_proc.php" method="POST">
+
+      Assignment ID: <input type="number" name="assignment_id"><br><br>
+      Course ID: <input type="number" name="course_id"><br><br>
+      <input type="submit" value="submit" name="submit">
+
+    </form>
