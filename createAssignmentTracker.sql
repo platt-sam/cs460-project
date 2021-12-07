@@ -97,7 +97,12 @@ CREATE TABLE roster_entry (
 -- Section
 -- -----------------------------------------
 /*
-
+CREATE TABLE IF NOT EXISTS section (
+	section_id INT NOT NULL,
+    course_id INT NOT NULL,
+    instructor_id INT NOT NULL,
+    PRIMARY KEY (section_id, course_id, instructor_id)
+);
 */
 -- -----------------------------------------
 -- Assignment
