@@ -122,14 +122,97 @@ CREATE TABLE IF NOT EXISTS assignment (
 -- Assignment_updates
 -- -----------------------------------------
 /*
+-- Ronin's implementation
+-- create a table to log all changes to assignments
+-- DROP TABLE IF EXISTS assignment_updates;
+CREATE TABLE assignment_updates (
+	id MEDIUMINT NOT NULL AUTO_INCREMENT,
+		assignment_id INT(11) NOT NULL,
+        old_assignment_name varchar (30), -- holds old assignment
+		new_assignment_name varchar (30), -- holds new assignment
+        date_changed date,
+        changed_by varchar(50),
+        PRIMARY KEY (id)
+);
 
 */
 -- -----------------------------------------
 -- Instructor
 -- -----------------------------------------
 /*
+-- Ronin's Implementation
+-- INSTRUCTOR TABLE
+CREATE TABLE instructor (
+	instructor_id INTEGER NOT NULL,
+    instructor_first VARCHAR(30) NOT NULL,
+	instructor_last VARCHAR(30) NOT NULL,
+	instructor_title ENUM ('Doctor', 'Associate Professor', 'Adjunct Instructor', 'Professor'),
+    instructor_dob DATE NOT NULL,
+    instructor_tenure BOOLEAN,
+    PRIMARY KEY (instructor_id)
+);
+*/
+
+/*
+-- RELATIONSHIPS
+-- ADDING FKS TO 
+-- Ronin's Implemntation
+
+-- TASK
+ALTER TABLE task
+	ADD CONSTRAINT assignment_fk
+    FOREIGN KEY (assignment_id)
+    REFERENCES assignment (assignment_id);
+
+ALTER TABLE task
+	ADD CONSTRAINT student_fk
+    FOREIGN KEY (student_id)
+    REFERENCES student (student_id);
+
+-- ASSIGNMENT
+ALTER TABLE assignment
+	ADD CONSTRAINT section_fk
+    FOREIGN KEY (section_id)
+    REFERENCES section (section_id);
+
+-- SECTION
+ALTER TABLE section
+	ADD CONSTRAINT course_fk
+    FOREIGN KEY (course_id) 
+    REFERENCES course (course_id);
+    
+ALTER TABLE section
+	ADD CONSTRAINT instructor_fk
+	FOREIGN KEY (instructor_id) 
+    REFERENCES instructor (instructor_id);
+
+-- ROSTER ENTRY
+ALTER TABLE roster_entry
+	ADD CONSTRAINT section_fk
+    FOREIGN KEY (section_id)
+    REFERENCES section (section_id);
+
+ALTER TABLE roster_entry
+	ADD CONSTRAINT student_fk
+    FOREIGN KEY (student_id)
+    REFERENCES student (student_id);
+
+SET FOREIGN_KEY_CHECKS = 0;
+
 
 */
+-- Populate instructor table
+-- Ronin's implementation
+INSERT INTO instructor (instructor_id, instructor_first, instructor_last, instructor_title, instructor_dob, instructor_tenure)
+VALUES ('94042474', 'Bob', 'Ross', 'Doctor', '1976-05-20', TRUE);
+INSERT INTO instructor (instructor_id, instructor_first, instructor_last, instructor_title, instructor_dob, instructor_tenure)
+VALUES ('97382675', 'Jimmy', 'Neutron', 'Doctor', '1975-06-03', FALSE);
+INSERT INTO instructor (instructor_id, instructor_first, instructor_last, instructor_title, instructor_dob, instructor_tenure)
+VALUES ('94064189', 'Ba', 'lake', 'Associate Professor', '1977-10-06', FALSE);
+INSERT INTO instructor (instructor_id, instructor_first, instructor_last, instructor_title, instructor_dob, instructor_tenure)
+VALUES ('92356783', 'Mary', 'Jane', 'Adjunct Instructor', '1978-01-02', FALSE);
+INSERT INTO instructor (instructor_id, instructor_first, instructor_last, instructor_title, instructor_dob, instructor_tenure)
+VALUES ('93786240', 'Naruto', 'Uzumkai', 'Professor', '1980-10-10', TRUE);
 
 -- Populate course table 
 INSERT INTO course (course_id, course_title, course_description) VALUES (4600, "Advanced Databases", NULL);
@@ -415,85 +498,6 @@ SET FOREIGN_KEY_CHECKS = 1;
 		
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ----------------------------- Ronins's Implementation Below -----------------------------
--- INSTRUCTOR TABLE
-CREATE TABLE instructor (
-	instructor_id INTEGER NOT NULL,
-    instructor_first VARCHAR(30) NOT NULL,
-	instructor_last VARCHAR(30) NOT NULL,
-	instructor_title ENUM ('Doctor', 'Associate Professor', 'Adjunct Instructor', 'Professor'),
-    instructor_dob DATE NOT NULL,
-    instructor_tenure BOOLEAN,
-    PRIMARY KEY (instructor_id)
-);
-
--- create a table to log all changes to assignments
--- DROP TABLE IF EXISTS assignment_updates;
-CREATE TABLE assignment_updates (
-	id MEDIUMINT NOT NULL AUTO_INCREMENT,
-		assignment_id INT(11) NOT NULL,
-        old_assignment_name varchar (30), -- holds old assignment
-		new_assignment_name varchar (30), -- holds new assignment
-        date_changed date,
-        changed_by varchar(50),
-        PRIMARY KEY (id)
-);
-
--- RELATIONSHIPS
--- ADDING FKS TO 
-
--- TASK
-ALTER TABLE task
-	ADD CONSTRAINT assignment_fk
-    FOREIGN KEY (assignment_id)
-    REFERENCES assignment (assignment_id);
-
-ALTER TABLE task
-	ADD CONSTRAINT student_fk
-    FOREIGN KEY (student_id)
-    REFERENCES student (student_id);
-
--- ASSIGNMENT
-ALTER TABLE assignment
-	ADD CONSTRAINT section_fk
-    FOREIGN KEY (section_id)
-    REFERENCES section (section_id);
-
--- SECTION
-ALTER TABLE section
-	ADD CONSTRAINT course_fk
-    FOREIGN KEY (course_id) 
-    REFERENCES course (course_id);
-    
-ALTER TABLE section
-	ADD CONSTRAINT instructor_fk
-	FOREIGN KEY (instructor_id) 
-    REFERENCES instructor (instructor_id);
-
--- ROSTER ENTRY
-ALTER TABLE roster_entry
-	ADD CONSTRAINT section_fk
-    FOREIGN KEY (section_id)
-    REFERENCES section (section_id);
-
-ALTER TABLE roster_entry
-	ADD CONSTRAINT student_fk
-    FOREIGN KEY (student_id)
-    REFERENCES student (student_id);
-
-SET FOREIGN_KEY_CHECKS = 0;
-
--- DATA
-INSERT INTO instructor (instructor_id, instructor_first, instructor_last, instructor_title, instructor_dob, instructor_tenure)
-VALUES ('94042474', 'Bob', 'Ross', 'Doctor', '1976-05-20', TRUE);
-INSERT INTO instructor (instructor_id, instructor_first, instructor_last, instructor_title, instructor_dob, instructor_tenure)
-VALUES ('97382675', 'Jimmy', 'Neutron', 'Doctor', '1975-06-03', FALSE);
-INSERT INTO instructor (instructor_id, instructor_first, instructor_last, instructor_title, instructor_dob, instructor_tenure)
-VALUES ('94064189', 'Ba', 'lake', 'Associate Professor', '1977-10-06', FALSE);
-INSERT INTO instructor (instructor_id, instructor_first, instructor_last, instructor_title, instructor_dob, instructor_tenure)
-VALUES ('92356783', 'Mary', 'Jane', 'Adjunct Instructor', '1978-01-02', FALSE);
-INSERT INTO instructor (instructor_id, instructor_first, instructor_last, instructor_title, instructor_dob, instructor_tenure)
-VALUES ('93786240', 'Naruto', 'Uzumkai', 'Professor', '1980-10-10', TRUE);
-
 -- Implementing View
 CREATE VIEW v_enrolled_students
 AS SELECT section_id, count(distinct student_id) FROM roster_entry GROUP BY (section_id);
