@@ -13,6 +13,10 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- DROP TABLE IF EXISTS grade_change_log;
 -- DROP TABLE IF EXISTS student;
 -- DROP TABLE IF EXISTS roster_entry;
+-- DROP TABLE IF EXIST section;
+-- DROP TABLE IF EXISTS assignment;
+-- DROP TABLE IF EXISTS assignment_updates;
+-- DROP TABLE IF EXISTS instructor;
 -- -----------------------------------------
 -- Task
 -- ----------------------------------------- 
@@ -88,6 +92,30 @@ CREATE TABLE roster_entry (
     FOREIGN KEY (student_id)
         REFERENCES student (student_id)
 );
+*/
+-- -----------------------------------------
+-- Section
+-- -----------------------------------------
+/*
+
+*/
+-- -----------------------------------------
+-- Assignment
+-- -----------------------------------------
+/*
+
+*/
+-- -----------------------------------------
+-- Assignment_updates
+-- -----------------------------------------
+/*
+
+*/
+-- -----------------------------------------
+-- Instructor
+-- -----------------------------------------
+/*
+
 */
 
 -- Populate course table 
