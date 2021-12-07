@@ -235,5 +235,152 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ----------------------------- Ronins's Implementation Below -----------------------------
+-- INSTRUCTOR TABLE
+CREATE TABLE instructor (
+	instructor_id INTEGER NOT NULL,
+    instructor_first VARCHAR(30) NOT NULL,
+	instructor_last VARCHAR(30) NOT NULL,
+	instructor_title ENUM ('Doctor', 'Associate Professor', 'Adjunct Instructor', 'Professor'),
+    instructor_dob DATE NOT NULL,
+    instructor_tenure BOOLEAN,
+    PRIMARY KEY (instructor_id)
+);
+
+-- create a table to log all changes to assignments
+-- DROP TABLE IF EXISTS assignment_updates;
+CREATE TABLE assignment_updates (
+	id MEDIUMINT NOT NULL AUTO_INCREMENT,
+		assignment_id INT(11) NOT NULL,
+        old_assignment_name varchar (30), -- holds old assignment
+		new_assignment_name varchar (30), -- holds new assignment
+        date_changed date,
+        changed_by varchar(50),
+        PRIMARY KEY (id)
+);
+
+-- RELATIONSHIPS
+-- ADDING FKS TO 
+
+-- TASK
+ALTER TABLE task
+	ADD CONSTRAINT assignment_fk
+    FOREIGN KEY (assignment_id)
+    REFERENCES assignment (assignment_id);
+
+ALTER TABLE task
+	ADD CONSTRAINT student_fk
+    FOREIGN KEY (student_id)
+    REFERENCES student (student_id);
+
+-- ASSIGNMENT
+ALTER TABLE assignment
+	ADD CONSTRAINT section_fk
+    FOREIGN KEY (section_id)
+    REFERENCES section (section_id);
+
+-- SECTION
+ALTER TABLE section
+	ADD CONSTRAINT course_fk
+    FOREIGN KEY (course_id) 
+    REFERENCES course (course_id);
+    
+ALTER TABLE section
+	ADD CONSTRAINT instructor_fk
+	FOREIGN KEY (instructor_id) 
+    REFERENCES instructor (instructor_id);
+
+-- ROSTER ENTRY
+ALTER TABLE roster_entry
+	ADD CONSTRAINT section_fk
+    FOREIGN KEY (section_id)
+    REFERENCES section (section_id);
+
+ALTER TABLE roster_entry
+	ADD CONSTRAINT student_fk
+    FOREIGN KEY (student_id)
+    REFERENCES student (student_id);
+
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- DATA
+INSERT INTO instructor (instructor_id, instructor_first, instructor_last, instructor_title, instructor_dob, instructor_tenure)
+VALUES ('94042474', 'Bob', 'Ross', 'Doctor', '1976-05-20', TRUE);
+INSERT INTO instructor (instructor_id, instructor_first, instructor_last, instructor_title, instructor_dob, instructor_tenure)
+VALUES ('97382675', 'Jimmy', 'Neutron', 'Doctor', '1975-06-03', FALSE);
+INSERT INTO instructor (instructor_id, instructor_first, instructor_last, instructor_title, instructor_dob, instructor_tenure)
+VALUES ('94064189', 'Ba', 'lake', 'Associate Professor', '1977-10-06', FALSE);
+INSERT INTO instructor (instructor_id, instructor_first, instructor_last, instructor_title, instructor_dob, instructor_tenure)
+VALUES ('92356783', 'Mary', 'Jane', 'Adjunct Instructor', '1978-01-02', FALSE);
+INSERT INTO instructor (instructor_id, instructor_first, instructor_last, instructor_title, instructor_dob, instructor_tenure)
+VALUES ('93786240', 'Naruto', 'Uzumkai', 'Professor', '1980-10-10', TRUE);
+
+-- Implementing View
+CREATE VIEW v_enrolled_students
+AS SELECT section_id, count(distinct student_id) FROM roster_entry GROUP BY (section_id);
+
+-- Testing the view
+SELECT * FROM v_enrolled_students WHERE section_id = 3201;
+
+-- Testing to see what my procedure would look like
+-- to see how many assignments are associated with each course
+SELECT course_title, assignment_id, assignment_name, status, dateStarted, dateCompleted FROM assignment
+NATURAL JOIN task, course where assignment_id = 2101 and course_id = 4600;
+
+-- Creating procedure
+-- Start
+CREATE PROCEDURE `Assignment_to_course_status`(p_assignment_id INT,
+p_course_id INT)
+BEGIN
+
+SELECT DISTINCT course_title, assignment_id, assignment_name, status, dateStarted, dateCompleted FROM assignment
+NATURAL JOIN task, course where assignment_id = p_assignment_id and course_id = p_course_id;
+
+END
+-- End of procedure
+
+-- call procedure
+call Assignment_to_course_status (2101, 4600);
 
 
+-- Testing to see what my function would look like
+-- to see if it counts the number of assignments
+SELECT count(assignment_id) AS 'Number of assignments' FROM assignment
+NATURAL JOIN section WHERE section_id = 3398;
+
+-- Creating Function
+-- Start
+CREATE FUNCTION `count_Assignments`(p_section_id INT) RETURNS int(11)
+    READS SQL DATA
+BEGIN
+-- holds number of assignments
+DECLARE num_of_assignments INT (11);
+
+SELECT count(assignment_id) AS 'Number of assignments' INTO  num_of_assignments FROM
+assignment
+NATURAL JOIN section WHERE section_id = p_section_id;
+
+RETURN num_of_assignments;
+END
+-- End of Function
+
+-- Testing Function
+SELECT count_Assignments (3398);
+
+-- Creating the Trigger
+-- Start
+CREATE TRIGGER `f21_assignmentTracker`.`assignment_AFTER_UPDATE` AFTER UPDATE ON `assignment` FOR EACH ROW
+BEGIN
+IF NEW.assignment_name != OLD.assignment_name THEN
+			INSERT INTO assignment_updates
+	VALUES (NULL, NEW.assignment_id, OLD.assignment_name, NEW.assignment_name, sysdate(), current_user());
+    END IF;
+END
+-- End
+
+-- Testing Trigger
+-- To see updates on their assignment based upon assignment id
+SELECT * FROM assignment_updates;
+UPDATE assignment SET assignment_name = 'Assignment 14'
+WHERE assignment_id = 2331;
+SELECT * FROM assignment_updates;
+rollback;
