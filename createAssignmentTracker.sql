@@ -103,9 +103,15 @@ CREATE TABLE roster_entry (
 -- Assignment
 -- -----------------------------------------
 /*
-
-
-
+CREATE TABLE IF NOT EXISTS assignment (
+    assignment_id INT NOT NULL,
+    assignment_name VARCHAR(30) NOT NULL,
+    points INT,
+    dueDate DATETIME,
+    dateAvail DATETIME, 
+    section_id INT NOT NULL,
+    PRIMARY KEY (assignment_id)
+);
 */
 -- -----------------------------------------
 -- Assignment_updates
@@ -154,6 +160,16 @@ INSERT INTO roster_entry VALUES (3417, 94206900, 'A');	-- karen
 INSERT INTO roster_entry VALUES (3417, 94039013, 'F');	-- michael
 
 -- Populate section table
+INSERT INTO section (section_id, course_id, instructor_id) VALUES (3419, 4600, 92356783);
+INSERT INTO section (section_id, course_id, instructor_id) VALUES (3422, 3140, 92356783);
+INSERT INTO section (section_id, course_id, instructor_id) VALUES (3473, 4600, 93786240);
+INSERT INTO section (section_id, course_id, instructor_id) VALUES (3398, 3174, 93786240);
+INSERT INTO section (section_id, course_id, instructor_id) VALUES (3402, 2034, 93786240);
+INSERT INTO section (section_id, course_id, instructor_id) VALUES (3417, 1000, 94042474);
+INSERT INTO section (section_id, course_id, instructor_id) VALUES (3397, 1000, 94042474);
+INSERT INTO section (section_id, course_id, instructor_id) VALUES (3501, 3140, 94064189);
+INSERT INTO section (section_id, course_id, instructor_id) VALUES (3610, 2034, 97382675);
+INSERT INTO section (section_id, course_id, instructor_id) VALUES (3201, 4600, 97382675);
 
 -- Populate assignment table
 INSERT INTO assignment (assignment_id, assignment_name, points, section_id, dueDate, dateAvail) VALUES (2331, 'Assignment 12', 15, 3419, '2021-11-28 23:59:00', '2021-11-22 10:30:00');
