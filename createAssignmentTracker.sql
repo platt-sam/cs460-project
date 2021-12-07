@@ -95,6 +95,7 @@ CREATE TABLE roster_entry (
 */
 -- -----------------------------------------
 -- Section
+	-- Sam's implementation
 -- -----------------------------------------
 /*
 CREATE TABLE IF NOT EXISTS section (
@@ -106,6 +107,7 @@ CREATE TABLE IF NOT EXISTS section (
 */
 -- -----------------------------------------
 -- Assignment
+	-- Sam's implementation
 -- -----------------------------------------
 /*
 CREATE TABLE IF NOT EXISTS assignment (
@@ -119,7 +121,7 @@ CREATE TABLE IF NOT EXISTS assignment (
 );
 */
 -- -----------------------------------------
--- Assignment_updates
+-- Assignment_updates 
 -- -----------------------------------------
 /*
 -- Ronin's implementation
@@ -421,6 +423,7 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ----------------------------- Sam's Implementation Below -----------------------------
+
 -- VIEW: incomplete_tasks
 	-- Will show all tasks assigned to a student that are not complete.
 CREATE VIEW incomplete_tasks AS
@@ -462,9 +465,21 @@ BEGIN
 END
 
 -- FUNCTION: 
+	-- Gets the due date for an assignment, and how many days/hours remain until the due date.
+CREATE FUNCTION assignment_deadline(in_assignment_id INT) RETURNS datetime
+BEGIN
+	DECLARE l_due DATETIME;
+	SELECT dueDate INTO l_due FROM assignment WHERE assignment_id = in_assignment_id;
+RETURN l_due;
 
 -- TRIGGER: 
-
+	-- Ensures that the values for status are from the list of pre-defined values.
+CREATE TRIGGER task_BEFORE_UPDATE BEFORE UPDATE ON task FOR EACH ROW
+BEGIN
+	IF NEW.status NOT IN ('Not Started','In-Progress','Completed') THEN
+		SET NEW.status = OLD.status; -- if the new value is not valid, revert back to old value
+	END IF;
+END
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ----------------------------- Nayeli's Implementation Below -----------------------------
