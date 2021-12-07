@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- 
+*	Filename: student_courses.html (function)
+* 	Author: Nayeli Esqueda Alvarado
+*	Class: CS460, Fall 21
+*
+*	Purpose: This HTML file provides a form to view enrolled information for 
+* 	an inputted student id. 
+*
+-->
+</head>
+
+<body>
+	<h1><a href="https://cs460.sou.edu/~platts1/f21_assignmentTracker/">Assignment Tracker</a></h1>
+	<h2> [Function] Enrolled Courses </h2>
+	<h4> Author: Nayeli Esqueda Alvarado</h4>
+	<h4 style="display:inline;">Description: </h4>
+	<p style="display:inline;"> This will display all the course that a student is enrolled in.  
+    </p>
+	<br/>
+	<br/>
+	<h4 style="display:inline;">Justification: </h4>
+	<p style="display:inline;">Will allow student know which courses they have enrolled in for the term.</p>
+	<br/>
+	<p>Please enter a correct student id to view all enrolled courses. (Ex. Student ID = 94012345) </p>
+
+	<!-- use the POST method to pass data to view_emp.php -->
+  	<form action="student_courses.php" method="POST">
+
+      Student ID: <input type="int" name="student_id"><br><br>
+      
+      <input type="submit" value="Submit" name="submit">
+
+	</form>
+</body>
+
+</html>
