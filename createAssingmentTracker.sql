@@ -61,6 +61,34 @@ CREATE TABLE grade_change_log(
 		REFERENCES roster_entry (section_id)   
 );
 */
+-- -----------------------------------------
+-- Student
+-- -----------------------------------------
+/*
+CREATE TABLE student (
+    student_id INT NOT NULL,
+    student_first VARCHAR(30) NOT NULL,
+    student_last VARCHAR(30) NOT NULL,
+    student_dob DATE,
+    student_credits DOUBLE,
+    PRIMARY KEY(student_id)
+);
+*/
+-- -----------------------------------------
+-- Roster_entry
+-- -----------------------------------------
+/*
+CREATE TABLE roster_entry (
+	section_id INTEGER NOT NULL,
+    student_id INTEGER NOT NULL,
+    grade ENUM('A', 'B', 'C', 'D', 'F'),
+    PRIMARY KEY (section_id, student_id),
+    FOREIGN KEY (section_id)
+        REFERENCES section (section_id),
+    FOREIGN KEY (student_id)
+        REFERENCES student (student_id)
+);
+*/
 
 -- Populate course table 
 INSERT INTO course (course_id, course_title, course_description) VALUES (4600, "Advanced Databases", NULL);
@@ -75,6 +103,25 @@ INSERT INTO task (student_id, assignment_id, status, dateStarted, dateCompleted)
 INSERT INTO task (student_id, assignment_id, status, dateStarted, dateCompleted) VALUES (94039013, 2319, "Not Started", NULL, NULL);
 INSERT INTO task (student_id, assignment_id, status, dateStarted, dateCompleted) VALUES (94668723, 2105, "Not Started", NULL, NULL);
 INSERT INTO task (student_id, assignment_id, status, dateStarted, dateCompleted) VALUES (94206900, 2331, "In-Progress", '2021-11-31', NULL);
+
+-- Populate student table
+INSERT INTO student VALUES (94012345, 'Bobby', 'Jones', '1997-05-11', 130);
+INSERT INTO student VALUES (94024689, 'Kitana', 'Hayami', '2000-07-10', 15);
+INSERT INTO student VALUES (94039013, 'Michael', 'Monroe', '1998-09-22', 183);
+INSERT INTO student VALUES (94668723, 'Susan', 'Thomson', '1996-05-15', 189);
+INSERT INTO student VALUES (94206900, 'Karen', 'Jackson', '1969-11-20', 160);
+
+-- Populate roster_entry table
+INSERT INTO roster_entry VALUES (3201, 94012345, 'A'); -- bobby
+INSERT INTO roster_entry VALUES (3201, 94024689, 'B'); -- kitana
+INSERT INTO roster_entry VALUES (3201, 94039013, NULL);	-- michael
+INSERT INTO roster_entry VALUES (3397, 94668723, 'A');	-- susan
+INSERT INTO roster_entry VALUES (3397, 94206900, 'C');	-- karen
+INSERT INTO roster_entry VALUES (3422, 94668723, NULL);	-- susan
+INSERT INTO roster_entry VALUES (3422, 94024689, 'D');	-- kitana
+INSERT INTO roster_entry VALUES (3417, 94012345, 'C');	-- bobby
+INSERT INTO roster_entry VALUES (3417, 94206900, 'A');	-- karen
+INSERT INTO roster_entry VALUES (3417, 94039013, 'F');	-- michael
 
 SET FOREIGN_KEY_CHECKS = 1; 
 
@@ -232,9 +279,76 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ----------------------------- Nayeli's Implementation Below -----------------------------
+-- VIEW: task_to_students
+	-- Keeps student_id, assignment_id, and status in one table. Will display all tasks tahta as student has been assigned and is seen in the task table.
+	-- Implement
+	CREATE VIEW tasks_to_students AS
+	SELECT student_id, assignment_id, status FROM task;
+	-- Calling view
+	SELECT * FROM tasks_to_students;
+	-- Calling view with specific student_id
+	SELECT * FROM tasks_to_students WHERE student_id = 94012345;
 
+-- PROCEDURE: update_task
+	-- Updates the task of an assignment. Takes in student_id, assignment_id and the updated status. 
+	-- Create Procedure
+	CREATE PROCEDURE `update_task`(IN p_student_id int, IN p_assignment_id int, 
+	IN p_status enum("Completed", "In-Progress", "Not Started"))
+	BEGIN
+		UPDATE task SET status = p_status WHERE student_id = p_student_id AND assignment_id = p_assignment_id;
+    		IF p_status = "Completed" THEN
+			UPDATE task SET dateCompleted = CURRENT_DATE() WHERE assignment_id = p_assignment_id;
+		END IF;
+    	SELECT student_id, assignment_id, status FROM task WHERE assignment_id = p_assignment_id and student_id = p_student_id;
+	END
+	-- Calling procedure
+	call update_task(94012345, 2101, 'Completed');
+	-- Check if table has changed
+	select * from task;
 
-
+-- FUNCTION: course_count
+	-- Gets total counf of courses that a student has enrolled in for. 
+	-- Create funtion
+	CREATE FUNCTION `course_count`(f_in int) RETURNS int(11)
+    	READS SQL DATA
+	BEGIN
+		DECLARE course_num INT DEFAULT 0;
+   		DECLARE total INT DEFAULT 0;
+    
+		SELECT count(course_id) INTO course_num 
+		FROM section natural join roster_entry WHERE student_id = f_in;    
+	
+    		IF(course_num > 1) THEN
+			SET total = total + course_num;
+		END IF;
+    
+		RETURN total;
+	END
+	-- Test Function
+	SELECT course_count("94012345");
+	SELECT student_id, course_count(student_id) FROM student;
+	
+-- TRIGGER
+	-- Will prevent students from settting their credit value below what they had previously, or if their credits are low enough round them up to a base credit value.
+	-- Create Trigger
+	CREATE DEFINER=`esquedaan`@`%` TRIGGER `f21_assignmentTracker`.`student_BEFORE_UPDATE` BEFORE UPDATE ON `student` FOR EACH ROW
+	BEGIN
+		IF NEW.student_credits < OLD.student_credits THEN
+			SET NEW.student_credits = OLD.student_credits;
+		ELSEIF NEW.student_credits < 12 THEN
+			SET NEW.student_credits = 0;
+		END IF;
+	END
+	-- Testing Trigger
+	Start transaction;
+	SELECT * FROM student;	
+	SET SQL_SAFE_UPDATES = 0;
+	UPDATE student SET student_credits = 125 WHERE student_id = 94012345;
+	SET SQL_SAFE_UPDATES = 1;
+	SELECT * FROM student;
+	rollback;
+		-- works student_id 94012345 was not able to update to 125 because they had a previous credit value at 130.
+		
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ----------------------------- Ronins's Implementation Below -----------------------------
 -- INSTRUCTOR TABLE
