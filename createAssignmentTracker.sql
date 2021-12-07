@@ -6,6 +6,7 @@ use f21_assignmentTracker;
 *	Organization: The code below is organized first by table creation, then relationships (if not implemented in table), then
 *			populating tables. After that views, functions, procedures, and triggers along with any tests and comments
 *			are organized under their respective developer. 
+			Please see "Implementation Document" for specifics on table implementation.
 ******************************************************************************************/
 SET FOREIGN_KEY_CHECKS = 0; 
 -- DROP TABLE IF EXISTS course;
@@ -94,8 +95,7 @@ CREATE TABLE roster_entry (
 );
 */
 -- -----------------------------------------
--- Section
-	-- Sam's implementation
+-- Section - Sam's implementation
 -- -----------------------------------------
 /*
 CREATE TABLE IF NOT EXISTS section (
@@ -106,8 +106,7 @@ CREATE TABLE IF NOT EXISTS section (
 );
 */
 -- -----------------------------------------
--- Assignment
-	-- Sam's implementation
+-- Assignment - Sam's implementation
 -- -----------------------------------------
 /*
 CREATE TABLE IF NOT EXISTS assignment (
@@ -156,9 +155,8 @@ CREATE TABLE instructor (
 */
 
 /*
--- RELATIONSHIPS
+-- RELATIONSHIPS - Ronin's Implemntation
 -- ADDING FKS TO 
--- Ronin's Implemntation
 
 -- TASK
 ALTER TABLE task
@@ -203,8 +201,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 
 
 */
--- Populate instructor table
--- Ronin's implementation
+-- Populate instructor table - Ronin's implementation
 INSERT INTO instructor (instructor_id, instructor_first, instructor_last, instructor_title, instructor_dob, instructor_tenure)
 VALUES ('94042474', 'Bob', 'Ross', 'Doctor', '1976-05-20', TRUE);
 INSERT INTO instructor (instructor_id, instructor_first, instructor_last, instructor_title, instructor_dob, instructor_tenure)
