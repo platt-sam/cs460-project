@@ -11,6 +11,8 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- DROP TABLE IF EXISTS course;
 -- DROP TABLE IF EXISTS task;
 -- DROP TABLE IF EXISTS grade_change_log;
+-- DROP TABLE IF EXISTS student;
+-- DROP TABLE IF EXISTS roster_entry;
 -- -----------------------------------------
 -- Task
 -- ----------------------------------------- 
