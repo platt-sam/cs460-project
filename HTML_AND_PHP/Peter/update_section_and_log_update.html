@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- Basic form to accept input via a webinterface 
+	Author: Peter Jacobson
+	Fall 2021 Assignment Tracker - Shows of the "Section Status" Trigger by Updating a students grade
+
+	-->
+
+	<font size ="+2"><b>Section Status Trigger</b></font>
+
+	<p><b>Implemented By:</b> Peter Jacobson</p>
+
+	<p><b>Description:</b> When a grade is updated in the roster table the instructor_id, dateTime, and change will be logged into a rosterLog table.</p> 
+
+	<p><b>Justification:</b>  An instructor should not be changing a student's grade often or after the grading window closes. If a student suspects an instructor is out for them this trigger may help provide proof. Unlikely but somehow it may also help catch unauthorized users making grade changes.</p>
+
+	<p><b>Expected Output:</b> A table with information on a grade change. Table with entries of (#, 3201, 94012345, 'A', 'F', jacobsonp, about the current time) expected in example provided. </body>
+
+</head>
+
+<body>
+
+	<p><hr></p>
+	<p>Please enter the following information of the students grade you want to update. (ex. 94012345, 3201, 'F'): </p>
+
+	<!-- use the POST method to pass data to view_students_by_course.php -->
+  	<form action="update_section_and_log_update.php" method="POST">
+
+      Student ID: <input type="number" name="student_id"><br><br>   
+      Course ID: <input type="number" name="section_id"><br><br>   
+      Grade: <input type="char" name="grade"><br><br>   
+
+      <input type="submit" value="Submit" name="submit">
+
+	</form>
+
+
+</html>
