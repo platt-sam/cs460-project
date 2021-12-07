@@ -104,6 +104,8 @@ CREATE TABLE roster_entry (
 -- -----------------------------------------
 /*
 
+
+
 */
 -- -----------------------------------------
 -- Assignment_updates
@@ -154,6 +156,11 @@ INSERT INTO roster_entry VALUES (3417, 94039013, 'F');	-- michael
 -- Populate section table
 
 -- Populate assignment table
+INSERT INTO assignment (assignment_id, assignment_name, points, section_id, dueDate, dateAvail) VALUES (2331, 'Assignment 12', 15, 3419, '2021-11-28 23:59:00', '2021-11-22 10:30:00');
+INSERT INTO assignment (assignment_id, assignment_name, points, section_id, dueDate, dateAvail) VALUES (2332, 'Assignment 13', 15, 3419, '2021-12-05 23:59:00', '2021-11-29 10:30:00');
+INSERT INTO assignment (assignment_id, assignment_name, points, section_id, dueDate, dateAvail) VALUES (2319, 'Midterm Paper', 45, 3398, '2021-11-06 23:00:00', '2021-10-19 08:30:00');
+INSERT INTO assignment (assignment_id, assignment_name, points, section_id, dueDate, dateAvail) VALUES (2105, 'Final Exam', 70, 3501, '2021-12-08 13:00:00', '2021-12-08 11:00:00');
+INSERT INTO assignment (assignment_id, assignment_name, points, section_id, dueDate, dateAvail) VALUES (2101, 'Quiz 4', 5, 3610, '2021-10-05 14:00:00', '2021-10-05 13:30:00');
 
 -- Populate assignment_updates table
 
