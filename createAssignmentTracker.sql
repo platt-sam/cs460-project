@@ -2,7 +2,7 @@ use f21_assignmentTracker;
 /******************************************************************************************
 *	CS460 Fall 2021
 * 	Written by: Nayeli Equeda Alvarado, Peter Jacobson, Ronin Ganoot, Sam Platt
-*	Purpose: SQL source code for 'Assingment Tracker', see implementation here: https://cs460.sou.edu/~platts1/f21_assignmentTracker/
+*	Purpose: SQL source code for 'Assignment Tracker', see implementation here: https://cs460.sou.edu/~platts1/f21_assignmentTracker/
 *	Organization: The code below is organized first by table creation, then realtionships (if not implemented in table), then
 *			populating tables. After that views, functions, procedures, and triggers along with any tests and comments
 *			are organized under their respective developer. 
