@@ -421,7 +421,49 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ----------------------------- Sam's Implementation Below -----------------------------
+-- VIEW: incomplete_tasks
+	-- Will show all tasks assigned to a student that are not complete.
+CREATE VIEW incomplete_tasks AS
+    SELECT 
+        student.student_id AS 'student_id',
+        course.course_title AS 'Course Title',
+        assignment.assignment_name AS 'Assignment Name',
+        task.status AS 'Status',
+        task.dateStarted AS 'Date Started',
+        assignment.dueDate AS 'Due Date'
+    FROM assignment NATURAL JOIN task, section, course, student
+    WHERE task.status <> 'Completed'
 
+-- PROCEDURE: overdue_assignments
+	-- Will show all tasks that are overdue and incomplete.
+CREATE PROCEDURE `overdue_assignments`(
+	in_student_id INT, 
+    OUT out_course_title VARCHAR(30), 
+    OUT out_assignment_name VARCHAR(30),
+    OUT out_status enum('Not Started','In-Progress','Completed'), 
+    OUT out_dateStarted DATE, 
+    OUT out_dueDate DATETIME)
+BEGIN
+    SELECT course_title INTO out_course_title FROM assignment 
+        NATURAL JOIN task, section, course
+        WHERE student_id = in_student_id AND status != 'Completed' AND dueDate <= NOW();
+	SELECT assignment_name INTO out_assignment_name FROM assignment 
+        NATURAL JOIN task, section, course
+        WHERE student_id = in_student_id AND status != 'Completed' AND dueDate <= NOW();
+    SELECT status INTO out_status FROM assignment 
+        NATURAL JOIN task, section, course
+        WHERE student_id = in_student_id AND status != 'Completed' AND dueDate <= NOW();
+	SELECT dateStarted INTO out_dateStarted FROM assignment 
+        NATURAL JOIN task, section, course
+        WHERE student_id = in_student_id AND status != 'Completed' AND dueDate <= NOW();
+	SELECT dueDate INTO out_dueDate FROM assignment 
+        NATURAL JOIN task, section, course
+        WHERE student_id = in_student_id AND status != 'Completed' AND dueDate <= NOW();
+END
+
+-- FUNCTION: 
+
+-- TRIGGER: 
 
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
