@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- 
+*	Filename: update_Assignment.html
+* 	Author: Ronin Ganoot
+* 	Last Updated: Fall 2021
+*	Class: CS460
+*
+*	Purpose: This file provides an interface to update assignments to the database. It posts
+*			data to the assignment_Logging_Trig.php file. 
+*  
+*
+-->
+</head>
+
+<body>
+
+<h2> Assignment Updates</h2>
+<h4> Author:Ronin Ganoot </h4>
+<p> This page provides an example interface to show that the after_update_assignment trigger is 
+functioning correctly.</p>
+<h4 style="display:inline;"> Description: </h4>
+<p style="display:inline;">Checks if new Assignments have been inserted into the table to 
+    keep a log of homework on a table that stores it.</p>
+<br/>
+<br/>
+<h4 style="display:inline;"> Justification: </h4>
+<p style="display:inline;"> Will help students tell which homework has been assigned 
+    and keep track of that.</p>
+<br/>
+<br/>
+<h4 style="display:inline;"> Execution Examples: </h4>
+<p style="display:inline;"> Try adding a new assignment name to an existing assignment id. For example use assignment id: 2331.</p>
+
+	<p>Please enter the following information for the new Assignment: </p>
+
+	<!-- use the POST method to pass data to insert_dept.php -->
+  	<form action="assignment_Logging_Trig.php" method="POST">
+
+      Assignment Name: <input type="text" name="assignment_name"><br><br>
+      Assignment ID: <input type="number" name="assignment_id"><br><br>
+      <input type="submit" value="Submit" name="submit">
+
+	</form>
+</body>
+
+</html>
