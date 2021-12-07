@@ -66,7 +66,7 @@ CREATE TABLE grade_change_log(
 );
 */
 -- -----------------------------------------
--- Student
+-- Student - Nayeli Implementation
 -- -----------------------------------------
 /*
 CREATE TABLE student (
@@ -79,7 +79,7 @@ CREATE TABLE student (
 );
 */
 -- -----------------------------------------
--- Roster_entry
+-- Roster_entry - Nayeli Implementation
 -- -----------------------------------------
 /*
 CREATE TABLE roster_entry (
@@ -230,14 +230,14 @@ INSERT INTO task (student_id, assignment_id, status, dateStarted, dateCompleted)
 INSERT INTO task (student_id, assignment_id, status, dateStarted, dateCompleted) VALUES (94668723, 2105, "Not Started", NULL, NULL);
 INSERT INTO task (student_id, assignment_id, status, dateStarted, dateCompleted) VALUES (94206900, 2331, "In-Progress", '2021-11-31', NULL);
 
--- Populate student table
+-- Populate student table - Nayeli Implementation
 INSERT INTO student VALUES (94012345, 'Bobby', 'Jones', '1997-05-11', 130);
 INSERT INTO student VALUES (94024689, 'Kitana', 'Hayami', '2000-07-10', 15);
 INSERT INTO student VALUES (94039013, 'Michael', 'Monroe', '1998-09-22', 183);
 INSERT INTO student VALUES (94668723, 'Susan', 'Thomson', '1996-05-15', 189);
 INSERT INTO student VALUES (94206900, 'Karen', 'Jackson', '1969-11-20', 160);
 
--- Populate roster_entry table
+-- Populate roster_entry table - Nayeli Implementation
 INSERT INTO roster_entry VALUES (3201, 94012345, 'A'); -- bobby
 INSERT INTO roster_entry VALUES (3201, 94024689, 'B'); -- kitana
 INSERT INTO roster_entry VALUES (3201, 94039013, NULL);	-- michael
