@@ -3,7 +3,7 @@ use f21_assignmentTracker;
 *	CS460 Fall 2021
 * 	Written by: Nayeli Equeda Alvarado, Peter Jacobson, Ronin Ganoot, Sam Platt
 *	Purpose: SQL source code for 'Assignment Tracker', see implementation here: https://cs460.sou.edu/~platts1/f21_assignmentTracker/
-*	Organization: The code below is organized first by table creation, then realtionships (if not implemented in table), then
+*	Organization: The code below is organized first by table creation, then relationships (if not implemented in table), then
 *			populating tables. After that views, functions, procedures, and triggers along with any tests and comments
 *			are organized under their respective developer. 
 ******************************************************************************************/
@@ -267,10 +267,6 @@ INSERT INTO assignment (assignment_id, assignment_name, points, section_id, dueD
 INSERT INTO assignment (assignment_id, assignment_name, points, section_id, dueDate, dateAvail) VALUES (2319, 'Midterm Paper', 45, 3398, '2021-11-06 23:00:00', '2021-10-19 08:30:00');
 INSERT INTO assignment (assignment_id, assignment_name, points, section_id, dueDate, dateAvail) VALUES (2105, 'Final Exam', 70, 3501, '2021-12-08 13:00:00', '2021-12-08 11:00:00');
 INSERT INTO assignment (assignment_id, assignment_name, points, section_id, dueDate, dateAvail) VALUES (2101, 'Quiz 4', 5, 3610, '2021-10-05 14:00:00', '2021-10-05 13:30:00');
-
--- Populate assignment_updates table
-
--- Populate instructor table
 
 SET FOREIGN_KEY_CHECKS = 1; 
 
